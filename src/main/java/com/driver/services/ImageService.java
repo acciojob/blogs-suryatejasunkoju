@@ -15,13 +15,17 @@ public class ImageService {
     @Autowired
     ImageRepository imageRepository2;
 
-    public Image addImage(Integer blogId, String description, String dimensions){
+    public Image addImage(Integer blogId, String description, String dimensions) {
         //add an image to the blog
+//        if(!blogRepository2.findById(blogId).isPresent()) {
+//            throw new Exception();
+//        }
         Blog blog = blogRepository2.findById(blogId).get();
         Image image = new Image(blog,description,dimensions);
         blog.getImageList().add(image);
         blogRepository2.save(blog);
         return image;
+        //Here I am not explicitly adding image in image-repository because due to cascading effect
     }
 
     public void deleteImage(Integer id){
@@ -45,9 +49,11 @@ public class ImageService {
         int imgl = Integer.parseInt(imgarray[0]); //A -- > integer
         int imgb = Integer.parseInt(imgarray[1]); //B -- > integer
 
-        return noOfImages(scrl,scrb,imgl,imgb);
+        return no_Images(scrl,scrb,imgl,imgb);
+
     }
-    private int noOfImages(int scrl, int scrb, int imgl, int imgb) {
+
+    private int no_Images(int scrl, int scrb, int imgl, int imgb) {
         int lenC = scrl/imgl; //
         int lenB = scrb/imgb;
         return lenC*lenB;
